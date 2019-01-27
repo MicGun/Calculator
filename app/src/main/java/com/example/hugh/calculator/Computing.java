@@ -18,21 +18,11 @@ public class Computing {
 
     public String getmResult() {
         char[] formulaChat = mDisformula.toCharArray();
-
-        //List<String> formulaSplitByOperator = formulaSplitByOperator(formulaChat);
-        List<String> formulaSplitByOperator = new ArrayList<>();
-        formulaSplitByOperator.add("5");
-        formulaSplitByOperator.add("\u00D7");
-        formulaSplitByOperator.add("15");
+        List<String> formulaSplitByOperator = formulaSplitByOperator(formulaChat);
         List<String> calculateTimesDivide = calculateTimesDivide(formulaSplitByOperator);
-//        List<String> calculateTimesDivide = new ArrayList<>();
-//        calculateTimesDivide.add("5");
-//        calculateTimesDivide.add("+");
-//        calculateTimesDivide.add("15");
-        String result = calculateResult(calculateTimesDivide);
-        //String result = String.valueOf(calculateTimesDivide.get(0));
+        mResult = calculateResult(calculateTimesDivide);
 
-        return result;
+        return mResult;
     }
 
     private String calculateResult(List<String> calculateTimesDivide) {

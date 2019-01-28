@@ -6,16 +6,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private String disformula = "";
     private String result = "";
+    List<String> formulaArrayList;
+    private String numberBuff;
+
+    public MainActivity() {
+        numberBuff = "";
+        formulaArrayList = new ArrayList<>();
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         final Computing computing;
 
@@ -43,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageViewEquals = (ImageView) findViewById(R.id.imageViewEquals);
         ImageView imageViewPoint = (ImageView) findViewById(R.id.imageViewPoint);
 
+        textViewFormula.setText("");
+        textViewResult.setText("");
+
 
 
         imageViewButton0.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     textViewFormula.setText(disformula);
                 }else {
                     textViewFormula.setText(disformula + "0");
+                    numberBuff = numberBuff+"0";
                 }
             }
         });
@@ -65,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "1");
+                numberBuff = numberBuff+"1";
             }
         });
 
@@ -73,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "2");
+                numberBuff = numberBuff+"2";
             }
         });
 
@@ -81,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "3");
+                numberBuff = numberBuff+"3";
             }
         });
 
@@ -89,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "4");
+                numberBuff = numberBuff+"4";
             }
         });
 
@@ -97,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "5");
+                numberBuff = numberBuff+"5";
             }
         });
 
@@ -105,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "6");
+                numberBuff = numberBuff+"6";
             }
         });
 
@@ -113,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "7");
+                numberBuff = numberBuff+"7";
             }
         });
 
@@ -121,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "8");
+                numberBuff = numberBuff+"8";
             }
         });
 
@@ -129,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 disformula = String.valueOf(textViewFormula.getText());
                 textViewFormula.setText(disformula + "9");
+                numberBuff = numberBuff+"9";
             }
         });
 
@@ -138,16 +163,22 @@ public class MainActivity extends AppCompatActivity {
                 disformula = String.valueOf(textViewFormula.getText());
                 result = String.valueOf(textViewResult.getText());
                 char[] disformulaToCahr = disformula.toCharArray();
-                String disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                String disformulaLsatChar = "";
+                if (disformulaToCahr.length!=0) {
+                    disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                }
                 String cons = "1234567890";
                 String operator = "+-\u00F7\u00D7";
                 if (cons.indexOf(disformulaLsatChar)!=-1) {
                     textViewFormula.setText(disformula + ".");
+                    numberBuff = numberBuff+".";
                 }else if (operator.indexOf(disformulaLsatChar)!=-1) {
                     textViewFormula.setText(disformula +"0.");
+                    numberBuff = numberBuff+"0.";
                 }else if (! result.matches("")) {
                     textViewFormula.setText("0.");
                     textViewResult.setText("");
+                    numberBuff = numberBuff+"0.";
                 }else {
                     textViewFormula.setText(disformula);
                 }
@@ -160,13 +191,21 @@ public class MainActivity extends AppCompatActivity {
                 disformula = String.valueOf(textViewFormula.getText());
                 result = String.valueOf(textViewResult.getText());
                 char[] disformulaToCahr = disformula.toCharArray();
-                String disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                String disformulaLsatChar = "";
+                if (disformulaToCahr.length!=0) {
+                    disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                }
                 String operator = "+-\u00F7\u00D7";
                 if (! result.matches("")) {
+                    formulaArrayList.add(result);
+                    formulaArrayList.add("+");
                     textViewFormula.setText(result + "+");
                     textViewResult.setText("");
                 }else if ((!disformula.matches("")) && (operator.indexOf(disformulaLsatChar) == -1)) {
                     textViewFormula.setText(disformula + "+");
+                    formulaArrayList.add(numberBuff);
+                    formulaArrayList.add("+");
+                    numberBuff="";
                 }else {
                     textViewFormula.setText(disformula);
                 }
@@ -179,13 +218,21 @@ public class MainActivity extends AppCompatActivity {
                 disformula = String.valueOf(textViewFormula.getText());
                 result = String.valueOf(textViewResult.getText());
                 char[] disformulaToCahr = disformula.toCharArray();
-                String disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                String disformulaLsatChar = "";
+                if (disformulaToCahr.length!=0) {
+                    disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                }
                 String operator = "+-\u00F7\u00D7";
                 if (! result.matches("")) {
+                    formulaArrayList.add(result);
+                    formulaArrayList.add("-");
                     textViewFormula.setText(result + "-");
                     textViewResult.setText("");
                 }else if ((!disformula.matches("")) && (operator.indexOf(disformulaLsatChar) == -1)) {
                     textViewFormula.setText(disformula + "-");
+                    formulaArrayList.add(numberBuff);
+                    formulaArrayList.add("-");
+                    numberBuff="";
                 }else {
                     textViewFormula.setText(disformula);
                 }
@@ -198,13 +245,21 @@ public class MainActivity extends AppCompatActivity {
                 disformula = String.valueOf(textViewFormula.getText());
                 result = String.valueOf(textViewResult.getText());
                 char[] disformulaToCahr = disformula.toCharArray();
-                String disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                String disformulaLsatChar = "";
+                if (disformulaToCahr.length!=0) {
+                    disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                }
                 String operator = "+-\u00F7\u00D7";
                 if (! result.matches("")) {
+                    formulaArrayList.add(result);
+                    formulaArrayList.add("\u00D7");
                     textViewFormula.setText(result + "\u00D7");
                     textViewResult.setText("");
                 }else if ((!disformula.matches("")) && (operator.indexOf(disformulaLsatChar) == -1)) {
                     textViewFormula.setText(disformula + "\u00D7");
+                    formulaArrayList.add(numberBuff);
+                    formulaArrayList.add("\u00D7");
+                    numberBuff="";
                 }else {
                     textViewFormula.setText(disformula);
                 }
@@ -217,13 +272,21 @@ public class MainActivity extends AppCompatActivity {
                 disformula = String.valueOf(textViewFormula.getText());
                 result = String.valueOf(textViewResult.getText());
                 char[] disformulaToCahr = disformula.toCharArray();
-                String disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                String disformulaLsatChar = "";
+                if (disformulaToCahr.length!=0) {
+                    disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                }
                 String operator = "+-\u00F7\u00D7";
                 if (! result.matches("")) {
+                    formulaArrayList.add(result);
+                    formulaArrayList.add("\u00F7");
                     textViewFormula.setText(result + "\u00F7");
                     textViewResult.setText("");
                 }else if ((!disformula.matches("")) && (operator.indexOf(disformulaLsatChar) == -1)) {
                     textViewFormula.setText(disformula + "\u00F7");
+                    formulaArrayList.add(numberBuff);
+                    formulaArrayList.add("\u00F7");
+                    numberBuff="";
                 }else {
                     textViewFormula.setText(disformula);
                 }
@@ -235,31 +298,36 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 textViewFormula.setText("");
                 textViewResult.setText("");
+                numberBuff="";
+                formulaArrayList.clear();
             }
         });
 
         imageViewEquals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                disformula = String.valueOf(textViewFormula.getText());
-//                Computing computing = new Computing(disformula);
-//                String computResult = computing.getmResult();
-//                textViewResult.setText(computResult);
                 disformula = String.valueOf(textViewFormula.getText());
                 result = String.valueOf(textViewResult.getText());
                 char[] disformulaToCahr = disformula.toCharArray();
-                String disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                String disformulaLsatChar = "";
+                if (disformulaToCahr.length!=0) {
+                    disformulaLsatChar = String.valueOf(disformulaToCahr[disformulaToCahr.length-1]);
+                }
                 String operator = "+-\u00F7\u00D7";
+                //'防呆與答案計算
                 if (result.matches("") && disformula.matches("")){
                     textViewFormula.setText("");
                     textViewResult.setText("");
                 }else if (operator.indexOf(disformulaLsatChar)!=-1) {
                     textViewFormula.setText(disformula);
                 }else {
-                    Computing computing = new Computing(disformula);
+                    formulaArrayList.add(numberBuff);
+                    Computing computing = new Computing(formulaArrayList);
                     String computResult = computing.getmResult();
                     textViewFormula.setText("");
                     textViewResult.setText(computResult);
+                    numberBuff="";
+                    formulaArrayList.clear();
                 }
             }
         });
